@@ -1,58 +1,109 @@
-# CI/CD Pipeline with GitHub Actions & Docker
+# CI/CD Pipeline with GitHub Actions, CircleCI, Jenkins & Docker
 
-## Project Overview
+## 🚀 Project Overview
 
-This project demonstrates how to implement a Continuous Integration and Continuous Deployment (CI/CD) pipeline using **GitHub Actions** and **Docker**. It is designed to help students and beginners understand the workflow, tools, and best practices involved in automating software build, test, and deployment processes.
-
----
-
-## What is CI/CD?
-
-- **Continuous Integration (CI)** is the practice of frequently merging all developers' working copies to a shared mainline. It involves automatically building, testing, and verifying changes to ensure the codebase remains healthy.
-- **Continuous Deployment (CD)** is the practice of automatically deploying every change that passes the CI process to production or staging environments. This reduces manual interventions and speeds up release cycles.
+This project demonstrates how to set up a Continuous Integration and Continuous Deployment (CI/CD) pipeline using **GitHub Actions**, **CircleCI**, **Jenkins**, and **Docker**. It is aimed at helping beginners and students understand how modern DevOps pipelines work using different industry tools.
 
 ---
 
-## Key Technologies
+## 📌 What is CI/CD?
+
+- **Continuous Integration (CI)**: Automatically builds and tests code changes to detect issues early.
+- **Continuous Deployment (CD)**: Automatically deploys tested code to production or staging environments.
+
+---
+
+## 🧰 Tools & Technologies Used
+
+| Tool         | Purpose                              |
+|--------------|---------------------------------------|
+| GitHub Actions | Automate builds/tests via GitHub    |
+| CircleCI     | Cloud-based CI/CD automation          |
+| Jenkins      | Self-hosted CI/CD pipeline server     |
+| Docker       | Containerization of the application   |
+
+---
+
+## 🛠️ How the Pipelines Work
+
+This project sets up **three CI/CD pipelines** using the same application and Docker image.
+
+### ✅ GitHub Actions
+
+- Triggers on `push` or `pull_request` to `main`
+- Steps:
+  - Checkout code
+  - Build Docker image
+  - Run tests
+  - Push image to Docker Hub
+  - (Optional) Deploy to server
+
+**File:** `.github/workflows/main.yml`
+
+---
+
+### ✅ CircleCI
+
+- Triggers on push to repository
+- Steps:
+  - Use Docker executor
+  - Install dependencies & run tests
+  - Build and push Docker image
+
+**File:** `.circleci/config.yml`
+
+---
+
+### ✅ Jenkins
+
+- Jenkins polls the GitHub repository or uses a webhook
+- Steps:
+  - Clone repo using Git plugin
+  - Build and test application
+  - Build Docker image
+  - Push image to Docker Hub
+  - Optional deployment step
+
+**File:** `Jenkinsfile`
+
+---
+
+## 📁 Project Structure
+![image](https://github.com/user-attachments/assets/71ec89d8-3b1e-4afd-ad9c-dadc83e65276)
+
+---
+
+## ✅ Prerequisites
+
+- GitHub account
+- Docker installed locally
+- Docker Hub account
+- CircleCI account (login via GitHub)
+- Jenkins installed (locally or via VM)
+- Basic understanding of YAML and Git
+
+---
+
+## ▶️ Running the Pipelines
 
 ### GitHub Actions
-
-GitHub Actions is a powerful automation platform integrated with GitHub, allowing you to create custom workflows that build, test, and deploy your code right from your GitHub repository. It enables robust CI/CD pipelines with ease and flexibility.
-
-### Docker
-
-Docker is a containerization platform that packages applications and their dependencies into containers. These containers ensure consistency across multiple environments such as development, testing, and production.
+```bash
+git push origin main
 
 ---
 
-## How This CI/CD Pipeline Works
+# Build Docker image
+docker build -t your-app-name .
 
-The pipeline in this project performs the following steps automatically whenever code is pushed to the repository:
+# Run container
+docker run -p 3000:3000 your-app-name
 
-1. **Checkout Code**: The workflow pulls the latest code from the GitHub repository.
-2. **Build Docker Image**: Docker builds an image of the application using the `Dockerfile` found in the repo.
-3. **Run Tests**: The image is used to run unit or integration tests inside a container.
-4. **Push Docker Image**: If tests pass, the pipeline pushes the Docker image to a Docker registry (like Docker Hub).
-5. **Deploy Application**: Optionally, the pipeline triggers a deployment process such as deploying to a cloud service or updating a server.
+# Push to Docker Hub
+docker tag your-app-name yourdockerhubusername/your-app-name
+docker push yourdockerhubusername/your-app-name
 
----
 
-## Prerequisites
 
-Before running or modifying this pipeline, you should have:
 
-- A GitHub account and basic understanding of Git/GitHub.
-- Docker installed on your machine (for local testing).
-- A Docker Hub account or access to a Docker registry (if pushing images).
-- Basic knowledge of YAML syntax (for understanding GitHub Actions workflows).
-- A sample application code and a `Dockerfile` to containerize it.
 
----
 
-## Running and Testing the Pipeline
-
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
